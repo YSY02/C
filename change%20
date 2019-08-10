@@ -1,0 +1,37 @@
+#define _CRT_SECURE_NO_WARINGS 1
+#include<stdio.h>
+#include<stdlib.h>
+#include<assert.h>
+char* change(char* str){
+	assert(str != NULL);//断言，判断str是否为空
+	char* pstr = str;    //str会变化，所以提前用pstr保存起来
+	int count = 0;       //计数器
+	char* end = NULL;
+	char* end_new = NULL;
+	while (str++ != '\0'){
+		if (*str == ' ')
+			count++;    //进行空格计数
+	}
+	end = str;
+	end_new = end + 2 * count;
+	str = pstr;
+	while (end != end_new){  //当新结束指针和原结束指针不想等时
+		if (*end == ' '){    //发现空格，变为%20
+			*end_new-- = '0';
+			*end_new-- = '2';
+			*end_new-- = '%';
+			end--;
+		}
+		else{
+			*end_new-- = *end--;//否则进行赋值
+		}
+	}
+	return pstr;   //将变化的字符串的首地址返回
+}
+int main()
+{
+	char str[128] = "I love China!";
+	printf("%s", change(str));
+	system("pause");
+	return 0;
+}
